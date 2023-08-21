@@ -1,0 +1,23 @@
+from docx import Document
+from openpyxl import Workbook
+
+# Load the .docx file
+doc = Document('your filepath/your filename.docx')
+
+# Create a new .xlsx file
+wb = Workbook()
+
+# Loop through each table in the .docx file
+for i, table in enumerate(doc.tables):
+    # Create a new sheet in the .xlsx file for each table
+    ws = wb.create_sheet(title=f'Table {i + 1}')
+
+    # Loop through each row in the table
+    for row in table.rows:
+        # Extract the text from each cell in the row
+        row_data = [cell.text for cell in row.cells]
+        # Append the row data to the current sheet
+        ws.append(row_data)
+
+# Save the .xlsx file
+wb.save('your filepath/your filename.xlsx')
